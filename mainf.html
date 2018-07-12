@@ -1,0 +1,76 @@
+<html >
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+<body background = "b.jpg">
+<link rel="stylesheet" type="text/css" href="main.css">
+<style>
+#info{
+border-radius: 5px; 
+width: 30%;
+margin: auto;
+float:center;
+
+z-index: 1;
+}
+#dat{
+float: right;
+}
+</style>
+
+<div class="bar" style="background-color:#777">
+<div class ="log" align = "right">
+<input type="button" class="button" value="logout" onclick="location='logout.php'" >
+<input type="button" class="button" value="Bill" onclick="location='bill.php'" >
+</div>
+</div>
+
+<div align = "center" id = "info">
+<h1> Energy Readings</h1>
+<table>
+<tr>
+<td ><p id="dat">Voltage :</p></td>
+<td><p id ="vol"></p></td>
+</tr>
+<br>
+<tr>
+<td><p  id="dat" >Current : </p></td>
+<td><p id ="cur"></p></td>
+</tr>
+<tr>
+<td><p id="dat">Energy : </p></td>
+<td><p id ="ener"></p></td>
+</tr>
+<tr>
+<td><p >Consumed :</p></td>
+<td><p id ="ter"></p></td>
+</tr>
+</table>
+</div>
+</body>
+<script>
+var url = "https://api.thingspeak.com/channels/480005/feeds.json?results=1";
+
+var a=0;
+var b =0;
+function updater()
+{
+$.getJSON(url,function(data)
+{
+document.getElementById("vol").innerHTML =data.feeds[0].field1;
+document.getElementById("cur").innerHTML = data.feeds[0].field2;
+a = data.feeds[0].field3;
+a = a/10000;
+a = a.toFixed(7);
+b = data.feeds[0].field4;
+b = b/10000;
+b = b.toFixed(7);
+document.getElementById("ener").innerHTML =a;
+document.getElementById("ter").innerHTML = b;
+});
+
+
+}
+
+setInterval(updater,1000)
+
+</script>
+</html>
