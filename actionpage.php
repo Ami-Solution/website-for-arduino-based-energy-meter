@@ -1,5 +1,4 @@
 <?php
-//harsha
 include 'connection.php';
 
 $varUserName=$_POST['uname'];
